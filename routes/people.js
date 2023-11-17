@@ -1,16 +1,8 @@
-const express=require(`express`)
-const app=express()
+const express=require('express')
+const router =express.Router()
 
-app.use(express.static('./public'))//send frontend
-//app.use(express.urlencoded({extended:false}))
-app.use(express.json())//get data sent by form
-
-app.get('/home',(req,res)=>{
-    console.log(`home page hit`)
-    res.status(200).json({success:true,data:people})
-})
-
-app.post('/login',(req,res)=>{
+//remove all /login as it becomes the base
+router.post('/',(req,res)=>{
     console.log(req.body.email)//data is here from middleware
     const {email}=req.body
     if(email){
@@ -19,7 +11,7 @@ app.post('/login',(req,res)=>{
     return res.status(200).send(`Enter some data ${email}`)
 })
 
-app.put('/login/:id',(req,res)=>{
+router.put('/new/:id',(req,res)=>{
  const {id}=req.params
  const {name}=req.body
  console.log(id,name)
@@ -28,7 +20,7 @@ app.put('/login/:id',(req,res)=>{
  //name is coming in the body of the request
 })
 
-app.delete('/login/:id',(req,res)=>{
+router.delete('/:id',(req,res)=>{
     const {id}=req.params
     const {name}=req.body
     console.log(id,name)
@@ -37,6 +29,4 @@ app.delete('/login/:id',(req,res)=>{
     //name is coming in the body of the request
 })
 
-app.listen(3000,()=>{
-    console.log('Server is listening')
-})
+module.exports=router
